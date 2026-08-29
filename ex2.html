@@ -4,32 +4,195 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Exercício 1</title>
+    <title>Exercício 2</title>
 </head>
-<body>
-    <header class="bg-cyan-700 h-26 p-5">
-        <nav class="flex flex-row justify-center gap-16">
+<body class=" bg-gray-100 min-h-screen">
+    <header class="bg-cyan-700 p-5">
+        <nav class="flex flex-row flex-wrap justify-center gap-4 md:gap-16">
 
-            <div class="flex justify-center items-center w-14 h-14 rounded-xl bg-white"> <a href="index.html" class="font-extrabold text-xl">1</a> </div>
+            <a href="index.html" class="font-extrabold text-xl">
+                <div class="flex justify-center items-center w-14 h-14 rounded-xl bg-white">1</div>
+            </a>
+                
+            <a href="ex2.html" class="font-extrabold text-2xl text-white">
+                <div class="flex justify-center items-center w-14 h-14 rounded-xl bg-cyan-900">2</div>
+            </a>
 
-            <div class="flex justify-center items-center w-14 h-14 rounded-xl bg-cyan-900"> <a href="ex2.html" class="font-extrabold text-2xl text-white">2</a> </div>
+            <a href="ex3.html" class="font-extrabold text-xl">
+                <div class="flex justify-center items-center w-14 h-14 rounded-xl bg-white">3</div>
+            </a>
 
-            <div class="flex justify-center items-center w-14 h-14 rounded-xl bg-white"> <a href="ex3.html" class="font-extrabold text-xl">3</a> </div>
+            <a href="ex4.html" class="font-extrabold text-xl">
+                <div class="flex justify-center items-center w-14 h-14 rounded-xl bg-white">4</div>
+            </a>
 
-            <div class="flex justify-center items-center w-14 h-14 rounded-xl bg-white"> <a href="ex4.html" class="font-extrabold text-xl">4</a> </div>
+            <a href="ex5.html" class="font-extrabold text-xl">
+                <div class="flex justify-center items-center w-14 h-14 rounded-xl bg-white">5</div>
+            </a>
 
-            <div class="flex justify-center items-center w-14 h-14 rounded-xl bg-white"> <a href="ex5.html" class="font-extrabold text-xl">5</a> </div>
+            <a href="ex6.html" class="font-extrabold text-xl">
+                <div class="flex justify-center items-center w-14 h-14 rounded-xl bg-white">6</div>
+            </a>
 
-            <div class="flex justify-center items-center w-14 h-14 rounded-xl bg-white"> <a href="ex6.html" class="font-extrabold text-xl">6</a> </div>
-
-        </nav>  
+        </nav>
     </header>
 
-    <main class="p-5">
-        <div class="flex flex-col justify-center items-center gap-2">
-            <h1 class="text-5xl font-bold">Folha de Pagamento</h1>
-            <p class="text-2xl">Exercício 2</p>
+    <main class="p-4 md:p-8 max-w-5xl mx-auto">
+
+        <div class="flex flex-col justify-center items-center gap-2 mb-8">
+            <h1 class="text-3xl md:text-5xl font-bold text-center">Folha de pagamento</h1>
+            <p class="text-xl md:text-2xl">Exercício 2</p>
         </div>
+
+        <!--Formulário de cadastro de funcinário-->
+        <section id="formFuncionario" class="bg-white rounded-2xl shadow-md p-5 md:p-6 mb-6">
+            <h2 class="text-lg font-bold mb-1">Cadastrar funcionário</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+
+                <div>
+                    <label class="block text-sm font-semibold mb-1" for="codigoFuncionario">Código do funcionário</label>
+                    <input type="text" id="codigoFuncionario" class="w-full border border-gray-300 rounded-lg p-2">
+                </div>
+                
+
+                <div>
+                    <label class="block text-sm font-semibold mb-1" for="horasMes">Horas trabalhadas mensais</label>
+                    <input type="number" id="horasMes" min="1" class="w-full border border-gray-300 rounded-lg p-2">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold mb-1" for="salFuncionario">Salário inicial (sem bônus)</label>
+                    <input type="text" id="salFuncionario" class="w-full border border-gray-300 rounded-lg p-2">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold mb-1" for="turnoFunc">Turno de trabalho</label>
+                    <select id="turnoFunc"
+                            class="w-full border border-gray-300 rounded-lg p-2">
+                        <option value="">Selecione</option>
+                        <option value="M">Matutino</option>
+                        <option value="V">Vespertino</option>
+                        <option value="N">Noturno</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold mb-1" for="categoriaFunc">Categoria</label>
+                    <select id="categoriaFunc" class="w-full border border-gray-300 rounded-lg p-2">
+                        <option value="">Selecione</option>
+                        <option value="F">Funcionário Operacional</option>
+                        <option value="G">Gerente</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold mb-1" for="avalFuncionario">Avaliação de desempenho mensal (0 à 10)</label>
+                    <input type="number" id="avalFuncionario" min="1" class="w-full border border-gray-300 rounded-lg p-2" placeholder="Ex.: 7">
+                </div>
+            </div>
+
+            <p id="msgPedido" class="text-sm mt-3 text-red-600"></p>
+
+            <button id="btnAdicionarFunc"
+                    class="mt-4 bg-cyan-700 hover:bg-cyan-800 text-white font-semibold px-5 py-2.5 rounded-lg transition"> Adicionar funcionário
+            </button>
+        </section>
+
     </main>
+
+
+    <script>
+        var funcionarios = []
+        var turnos = {'M': 'Matutino', 'V': 'Vespertino', 'N': 'Noturno'}
+        var categorias = {'F': 'Funcionário Operacional', 'G': 'Gerente'}
+        
+        //VERIFICAÇÃO DE CÓDIGO REPETIDO
+        function codigoJaExiste(codigo) {
+            var i = 0
+            while (i < funcionarios.length) {
+                if (funcionarios[i].codigo === codigo) return true;
+                i++;
+            }
+            return false;
+        }
+
+
+        //CALCULO DO SALÁRIO
+        function calcularSalario(salarioIni, horas, categoria, avaliacao, turno){
+
+            //valor da hora trabalhada
+            function valorHora (salarioIni, horas, categoria, turno){
+
+                if (categoria === 'F'){
+                    switch (turno) {
+                        case 'M': return (salarioIni * 0.1) * horas
+                        case 'V': return (salarioIni * 0.15) * horas
+                        case 'N': return (salarioIni * 0.2) * horas
+                        default: return null 
+                    }
+                }
+
+                if (categoria === 'G') {
+                    switch (turno) {
+                        case 'M': return salarioIni * 0.3
+                        case 'V': return salarioIni * 0.35
+                        case 'N': return salarioIni * 0.4
+                        default: return null 
+                    }
+                }
+            }
+
+            //auxilio alimentação
+            function auxAlimentacao (salarioIni){
+                if (salarioIni <= 800) return salarioIni * 0.25
+                else if (salarioIni >= 800.01 && salarioIni <= 1200) return salarioIni * 0.20
+                else return salarioIni * 0.15
+            }
+
+            //desempenho
+            function desempenho (salarioIni, avaliacao){
+                if (avaliacao >= 9 && avaliacao <= 10) return salarioIni * 0.10
+                else if (avaliacao >= 7 && avaliacao <= 8.99) return salarioIni * 0.05
+                else if (avaliacao >= 5 && avaliacao <= 6.99) return salarioIni * 0.02
+                else return null
+            }
+
+            return salarioIni + valorHora(salarioIni, horas, categoria, turno) + auxAlimentacao(salarioIni) + desempenho(avaliacao)
+        }
+
+        //ADICIONA O FUNCIONARIO SE TUDO ESTIVER CORRETO
+        function adicionaFuncionario(){
+            var codigo = document.getElementById('codigoFuncionario').value.trim()
+            var salarioIni = parseFloat(document.getElementById('salFuncionario').value)
+            var horas = parseFloat(document.getElementById('horasMes').value)
+            var turno = document.getElementById('turnoFunc').value
+            var categoria = document.getElementById('categoriaFunc').value
+            var avaliacao = parseFloat(document.getElementById('avalFuncionario').value)
+
+            var msg = document.getElementById("msgPedido");
+
+            //validação de informações
+            if (!codigo || codigoJaExiste(codigo) || !salarioIni || !horas || !categoria || !avaliacao) {
+                msg.textContent = "Preencha tudo corretamente (código único, horas, categoria e avaliação).";
+                return;
+            }
+            var total = calcularSalario(salarioIni, horas, categoria, avaliacao, turno)
+
+            funcionarios.push({ codigo: codigo, salarioIni: salarioIni, horas: horas, turno: turno, categoria: categoria, avaliacao: avaliacao, total: total })
+
+
+            //limpa os campos do formulário
+            document.getElementById("codigoFuncionario").value = ""
+            document.getElementById("salFuncionario").value = ""
+            document.getElementById("horasMes").value = ""
+            document.getElementById("turnoFunc").value = ""
+            document.getElementById("categoria").value = ""
+            document.getElementById("avalFuncionario").value = ""
+            msg.textContent = ""
+        }
+
+        document.getElementById("btnAdicionarFunc").addEventListener("click", adicionaFuncionario);
+    </script>
 </body>
 </html>
