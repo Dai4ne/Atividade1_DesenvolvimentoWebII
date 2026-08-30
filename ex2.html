@@ -6,14 +6,14 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>Exercício 2</title>
 </head>
-<body class=" bg-gray-100 min-h-screen">
+<body class="bg-gray-100 min-h-screen">
     <header class="bg-cyan-700 p-5">
         <nav class="flex flex-row flex-wrap justify-center gap-4 md:gap-16">
 
             <a href="index.html" class="font-extrabold text-xl">
                 <div class="flex justify-center items-center w-14 h-14 rounded-xl bg-white">1</div>
             </a>
-                
+
             <a href="ex2.html" class="font-extrabold text-2xl text-white">
                 <div class="flex justify-center items-center w-14 h-14 rounded-xl bg-cyan-900">2</div>
             </a>
@@ -44,8 +44,27 @@
             <p class="text-xl md:text-2xl">Exercício 2</p>
         </div>
 
-        <!--Formulário de cadastro de funcinário-->
-        <section id="formFuncionario" class="bg-white rounded-2xl shadow-md p-5 md:p-6 mb-6">
+        <!-- Salário mínimo-->
+        <section id="secSalarioMinimo" class="bg-white rounded-2xl shadow-md p-5 md:p-6 mb-6">
+            <h2 class="text-lg font-bold mb-3">Salário mínimo atual</h2>
+
+            <div class="flex flex-col sm:flex-row gap-3 sm:items-end">
+                <div class="flex-1">
+                    <label class="block text-sm font-semibold mb-1" for="salarioMinimoInput">Salário mínimo (R$)</label>
+                    <input type="number" id="salarioMinimoInput" min="0.01" step="0.01" placeholder="Ex: 1518.00"
+                           class="w-full border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-cyan-700">
+                </div>
+                <button id="btnDefinirSalarioMinimo"
+                        class="bg-cyan-700 hover:bg-cyan-800 text-white font-semibold px-5 py-2.5 rounded-lg transition">
+                    Definir
+                </button>
+            </div>
+
+            <p id="msgSalarioMinimo" class="text-sm mt-3"></p>
+        </section>
+
+        <!-- Cadastro funcionário-->
+        <section id="secFuncionario" class="bg-white rounded-2xl shadow-md p-5 md:p-6 mb-6 opacity-40 pointer-events-none transition">
             <h2 class="text-lg font-bold mb-1">Cadastrar funcionário</h2>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
@@ -54,7 +73,6 @@
                     <label class="block text-sm font-semibold mb-1" for="codigoFuncionario">Código do funcionário</label>
                     <input type="text" id="codigoFuncionario" class="w-full border border-gray-300 rounded-lg p-2">
                 </div>
-                
 
                 <div>
                     <label class="block text-sm font-semibold mb-1" for="horasMes">Horas trabalhadas mensais</label>
@@ -62,14 +80,8 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-semibold mb-1" for="salFuncionario">Salário inicial (sem bônus)</label>
-                    <input type="text" id="salFuncionario" class="w-full border border-gray-300 rounded-lg p-2">
-                </div>
-
-                <div>
                     <label class="block text-sm font-semibold mb-1" for="turnoFunc">Turno de trabalho</label>
-                    <select id="turnoFunc"
-                            class="w-full border border-gray-300 rounded-lg p-2">
+                    <select id="turnoFunc" class="w-full border border-gray-300 rounded-lg p-2">
                         <option value="">Selecione</option>
                         <option value="M">Matutino</option>
                         <option value="V">Vespertino</option>
@@ -78,121 +90,62 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-semibold mb-1" for="categoriaFunc">Categoria</label>
-                    <select id="categoriaFunc" class="w-full border border-gray-300 rounded-lg p-2">
+                    <label class="block text-sm font-semibold mb-1" for="categoriaFuncionario">Categoria</label>
+                    <select id="categoriaFuncionario" class="w-full border border-gray-300 rounded-lg p-2">
                         <option value="">Selecione</option>
                         <option value="F">Funcionário Operacional</option>
                         <option value="G">Gerente</option>
                     </select>
                 </div>
-                
+
                 <div>
-                    <label class="block text-sm font-semibold mb-1" for="avalFuncionario">Avaliação de desempenho mensal (0 à 10)</label>
-                    <input type="number" id="avalFuncionario" min="1" class="w-full border border-gray-300 rounded-lg p-2" placeholder="Ex.: 7">
+                    <label class="block text-sm font-semibold mb-1" for="avalFuncionario">Avaliação de desempenho mensal (0 a 10)</label>
+                    <input type="number" id="avalFuncionario" min="0" max="10" step="0.01" class="w-full border border-gray-300 rounded-lg p-2" placeholder="Ex: 7">
                 </div>
+
             </div>
 
-            <p id="msgPedido" class="text-sm mt-3 text-red-600"></p>
+            <p id="msgFuncionario" class="text-sm mt-3 text-red-600"></p>
 
             <button id="btnAdicionarFunc"
-                    class="mt-4 bg-cyan-700 hover:bg-cyan-800 text-white font-semibold px-5 py-2.5 rounded-lg transition"> Adicionar funcionário
+                    class="mt-4 bg-cyan-700 hover:bg-cyan-800 text-white font-semibold px-5 py-2.5 rounded-lg transition">
+                Adicionar funcionário
             </button>
+        </section>
+
+        <!-- Lista de funcionários cadastrados-->
+        <section id="secLista" class="bg-white rounded-2xl shadow-md p-5 md:p-6 mb-6 hidden">
+            <h2 class="text-lg font-bold mb-4">Funcionários cadastrados (<span id="contadorFuncionarios">0</span>)</h2>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left">
+                    <thead>
+                        <tr class="border-b border-gray-200 text-gray-500">
+                            <th class="py-2 pr-4">Código</th>
+                            <th class="py-2 pr-4">Categoria</th>
+                            <th class="py-2 pr-4">Turno</th>
+                            <th class="py-2 pr-4">Avaliação</th>
+                            <th class="py-2 pr-4">Salário final</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaFuncionarios"></tbody>
+                </table>
+            </div>
+
+            <button id="btnGerarRelatorio"
+                    class="mt-5 bg-cyan-700 hover:bg-cyan-800 text-white font-semibold px-5 py-2.5 rounded-lg transition">
+                Gerar relatório
+            </button>
+        </section>
+
+        <!-- relatório final-->
+        <section id="secRelatorio" class="bg-white rounded-2xl shadow-md p-5 md:p-6 hidden">
+            <h2 class="text-lg font-bold mb-4">Relatório final</h2>
+            <div id="relatorioConteudo" class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm"></div>
         </section>
 
     </main>
 
-
-    <script>
-        var funcionarios = []
-        var turnos = {'M': 'Matutino', 'V': 'Vespertino', 'N': 'Noturno'}
-        var categorias = {'F': 'Funcionário Operacional', 'G': 'Gerente'}
-        
-        //VERIFICAÇÃO DE CÓDIGO REPETIDO
-        function codigoJaExiste(codigo) {
-            var i = 0
-            while (i < funcionarios.length) {
-                if (funcionarios[i].codigo === codigo) return true;
-                i++;
-            }
-            return false;
-        }
-
-
-        //CALCULO DO SALÁRIO
-        function calcularSalario(salarioIni, horas, categoria, avaliacao, turno){
-
-            //valor da hora trabalhada
-            function valorHora (salarioIni, horas, categoria, turno){
-
-                if (categoria === 'F'){
-                    switch (turno) {
-                        case 'M': return (salarioIni * 0.1) * horas
-                        case 'V': return (salarioIni * 0.15) * horas
-                        case 'N': return (salarioIni * 0.2) * horas
-                        default: return null 
-                    }
-                }
-
-                if (categoria === 'G') {
-                    switch (turno) {
-                        case 'M': return salarioIni * 0.3
-                        case 'V': return salarioIni * 0.35
-                        case 'N': return salarioIni * 0.4
-                        default: return null 
-                    }
-                }
-            }
-
-            //auxilio alimentação
-            function auxAlimentacao (salarioIni){
-                if (salarioIni <= 800) return salarioIni * 0.25
-                else if (salarioIni >= 800.01 && salarioIni <= 1200) return salarioIni * 0.20
-                else return salarioIni * 0.15
-            }
-
-            //desempenho
-            function desempenho (salarioIni, avaliacao){
-                if (avaliacao >= 9 && avaliacao <= 10) return salarioIni * 0.10
-                else if (avaliacao >= 7 && avaliacao <= 8.99) return salarioIni * 0.05
-                else if (avaliacao >= 5 && avaliacao <= 6.99) return salarioIni * 0.02
-                else return null
-            }
-
-            return salarioIni + valorHora(salarioIni, horas, categoria, turno) + auxAlimentacao(salarioIni) + desempenho(avaliacao)
-        }
-
-        //ADICIONA O FUNCIONARIO SE TUDO ESTIVER CORRETO
-        function adicionaFuncionario(){
-            var codigo = document.getElementById('codigoFuncionario').value.trim()
-            var salarioIni = parseFloat(document.getElementById('salFuncionario').value)
-            var horas = parseFloat(document.getElementById('horasMes').value)
-            var turno = document.getElementById('turnoFunc').value
-            var categoria = document.getElementById('categoriaFunc').value
-            var avaliacao = parseFloat(document.getElementById('avalFuncionario').value)
-
-            var msg = document.getElementById("msgPedido");
-
-            //validação de informações
-            if (!codigo || codigoJaExiste(codigo) || !salarioIni || !horas || !categoria || !avaliacao) {
-                msg.textContent = "Preencha tudo corretamente (código único, horas, categoria e avaliação).";
-                return;
-            }
-            var total = calcularSalario(salarioIni, horas, categoria, avaliacao, turno)
-
-            funcionarios.push({ codigo: codigo, salarioIni: salarioIni, horas: horas, turno: turno, categoria: categoria, avaliacao: avaliacao, total: total })
-
-
-            //limpa os campos do formulário
-            document.getElementById("codigoFuncionario").value = ""
-            document.getElementById("salFuncionario").value = ""
-            document.getElementById("horasMes").value = ""
-            document.getElementById("turnoFunc").value = ""
-            document.getElementById("categoria").value = ""
-            document.getElementById("avalFuncionario").value = ""
-            msg.textContent = ""
-        }
-
-        document.getElementById("btnAdicionarFunc").addEventListener("click", adicionaFuncionario);
-    </script>
+    <script src="script2.js"></script>
 </body>
 </html>
