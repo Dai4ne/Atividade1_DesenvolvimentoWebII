@@ -6,7 +6,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>Exercício 6</title>
 </head>
-<body class=" bg-gray-100 min-h-screen">
+<body class="bg-gray-100 min-h-screen">
     <header class="bg-cyan-700 p-5">
         <nav class="flex flex-row flex-wrap justify-center gap-4 md:gap-16">
 
@@ -21,7 +21,7 @@
             <a href="ex3.html" class="font-extrabold text-xl">
                 <div class="flex justify-center items-center w-14 h-14 rounded-xl bg-white">3</div>
             </a>
-            
+
             <a href="ex4.html" class="font-extrabold text-xl">
                 <div class="flex justify-center items-center w-14 h-14 rounded-xl bg-white">4</div>
             </a>
@@ -33,14 +33,141 @@
             <a href="ex6.html" class="font-extrabold text-2xl text-white">
                 <div class="flex justify-center items-center w-14 h-14 rounded-xl bg-cyan-900">6</div>
             </a>
+
         </nav>
     </header>
 
     <main class="p-4 md:p-8 max-w-5xl mx-auto">
+
         <div class="flex flex-col justify-center items-center gap-2 mb-8">
-            <h1 class="text-3xl md:text-5xl font-bold text-center">Vendas, Metas e Performance</h1>
+            <h1 class="text-3xl md:text-5xl font-bold text-center">Vendas com Comissões, Metas e Performance</h1>
             <p class="text-xl md:text-2xl">Exercício 6</p>
         </div>
+
+        <!-- configuração inicial -->
+        <section id="secConfig" class="bg-white rounded-2xl shadow-md p-5 md:p-6 mb-6">
+            <h2 class="text-lg font-bold mb-3">Configuração inicial</h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:items-end">
+                <div>
+                    <label class="block text-sm font-semibold mb-1" for="metaMensal">Meta mensal por vendedor (R$)</label>
+                    <input type="number" id="metaMensal" class="w-full border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-cyan-700">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold mb-1" for="percentualBase">Percentual base de comissão (%)</label>
+                    <input type="number" id="percentualBase" class="w-full border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-cyan-700">
+                </div>
+
+                <button id="btnDefinirConfig"
+                        class="bg-cyan-700 hover:bg-cyan-800 text-white font-semibold px-5 py-2.5 rounded-lg transition">
+                    Definir
+                </button>
+            </div>
+
+            <p id="msgConfig" class="text-sm mt-3"></p>
+        </section>
+
+        <!-- cadastro de vendas  -->
+        <section id="secVenda" class="bg-white rounded-2xl shadow-md p-5 md:p-6 mb-6 opacity-40 pointer-events-none transition">
+            <h2 class="text-lg font-bold mb-1">Cadastrar venda</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+
+                <div>
+                    <label class="block text-sm font-semibold mb-1" for="codigoVenda">Código da venda</label>
+                    <input type="text" id="codigoVenda" class="w-full border border-gray-300 rounded-lg p-2">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold mb-1" for="codigoVendedor">Código do vendedor</label>
+                    <input type="text" id="codigoVendedor" class="w-full border border-gray-300 rounded-lg p-2">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold mb-1" for="regiaoLoja">Região da loja</label>
+                    <select id="regiaoLoja" class="w-full border border-gray-300 rounded-lg p-2">
+                        <option value="">Selecione</option>
+                        <option value="1">Norte</option>
+                        <option value="2">Nordeste</option>
+                        <option value="3">Sudeste</option>
+                        <option value="4">Sul</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold mb-1" for="tipoCliente">Tipo de cliente</label>
+                    <select id="tipoCliente" class="w-full border border-gray-300 rounded-lg p-2">
+                        <option value="">Selecione</option>
+                        <option value="PF">Pessoa Física</option>
+                        <option value="PJ">Pessoa Jurídica</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold mb-1" for="valorVenda">Valor da venda (R$)</label>
+                    <input type="number" id="valorVenda" min="0.01" step="0.01" class="w-full border border-gray-300 rounded-lg p-2">
+                </div>
+
+            </div>
+
+            <p id="msgVenda" class="text-sm mt-3 text-red-600"></p>
+
+            <button id="btnAdicionarVenda"
+                    class="mt-4 bg-cyan-700 hover:bg-cyan-800 text-white font-semibold px-5 py-2.5 rounded-lg transition">
+                Adicionar venda
+            </button>
+        </section>
+
+        <!-- lista de vendas -->
+        <section id="secLista" class="bg-white rounded-2xl shadow-md p-5 md:p-6 mb-6 hidden">
+            <h2 class="text-lg font-bold mb-4">Vendas cadastradas (<span id="contadorVendas">0</span>)</h2>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left">
+                    <thead>
+                        <tr class="border-b border-gray-200 text-gray-500">
+                            <th class="py-2 pr-4">Venda</th>
+                            <th class="py-2 pr-4">Vendedor</th>
+                            <th class="py-2 pr-4">Região</th>
+                            <th class="py-2 pr-4">Cliente</th>
+                            <th class="py-2 pr-4">Valor</th>
+                            <th class="py-2 pr-4">Comissão</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaVendas"></tbody>
+                </table>
+            </div>
+
+            <button id="btnGerarRelatorio"
+                    class="mt-5 bg-cyan-700 hover:bg-cyan-800 text-white font-semibold px-5 py-2.5 rounded-lg transition">
+                Gerar relatório 
+            </button>
+        </section>
+
+        <!-- relatório -->
+        <section id="secRelatorio" class="bg-white rounded-2xl shadow-md p-5 md:p-6 hidden">
+            <h2 class="text-lg font-bold mb-4">Relatório final</h2>
+            <div id="relatorioConteudo" class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm mb-6"></div>
+
+            <h3 class="text-md font-bold mb-3">Performance por vendedor</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left">
+                    <thead>
+                        <tr class="border-b border-gray-200 text-gray-500">
+                            <th class="py-2 pr-4">Vendedor</th>
+                            <th class="py-2 pr-4">Valor total vendido</th>
+                            <th class="py-2 pr-4">Comissão total</th>
+                            <th class="py-2 pr-4">Bateu a meta?</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaVendedores"></tbody>
+                </table>
+            </div>
+        </section>
+
     </main>
+
+    <script src="script6.js"></script>
 </body>
 </html>
